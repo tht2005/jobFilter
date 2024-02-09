@@ -84,10 +84,7 @@
         #job > div:nth-child(1) > div {
             display: inline-block;
         }
-        .job-image {
-            width: 70px;
-            height: 70px;
-            background: hsl(211, 10%, 45%);
+        .job-image > svg {
             border-radius: 50%;
         }
         .job-info {
@@ -256,6 +253,11 @@
             showData();
         }
 
+        const svgs = [];
+        <% for(dir in image) { %>
+            svgs['<%=dir%>'] = '<%=image[dir]%>'.replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&#34;', '"');;
+        <% } %>
+        console.log(svgs);
         const data = JSON.parse('<%= JSON.stringify(jobs) %>'.replaceAll('&#34;', '"'));
 
         function showData() {
@@ -290,7 +292,7 @@
                         languages="${e.languages}"
                         tools="${e.tools}">
                         <div style="display: flex; gap: 10px; align-items: center; justify-content: flex-start;">
-                            <div class="job-image"></div>
+                            <div class="job-image">${svgs[e.logo]}</div>
                             <div class="job-info">
                                 <div style="display: flex; gap: 10px; align-items: center;">
                                     <div class="company">${e.company}</div>
